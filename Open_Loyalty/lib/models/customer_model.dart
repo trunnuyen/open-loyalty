@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:open_loyalty/constant.dart';
+
 class CustomerModel {
   String id;
   String name;
@@ -25,6 +28,44 @@ class CustomerModel {
     required this.location,
   });
 
+  Map<String, String> toJson() {
+    return {
+      FirestoreConstants.name: name,
+      FirestoreConstants.email: email,
+    };
+  }
+
+  factory CustomerModel.fromDocument(DocumentSnapshot doc) {
+    String email = "";
+    String name = "";
+    String gender = "";
+    String birthday = "";
+    String nationality = "";
+    String cmd = "";
+    String phone = "";
+    String loyaltyCardNumber = "";
+    String levelId = "";
+    String location = "";
+    try {
+      email = doc.get(FirestoreConstants.email);
+    } catch (e) {}
+    try {
+      name = doc.get(FirestoreConstants.name);
+    } catch (e) {}
+    return CustomerModel(
+      id: doc.id,
+      name: name,
+      email: email,
+      gender: gender,
+      birthday: birthday,
+      nationality: nationality,
+      cmd: cmd,
+      phone: phone,
+      loyaltyCardNumber: loyaltyCardNumber,
+      levelId: levelId,
+      location: location,
+    );
+  }
 }
 
 class CustomerStatusModel {
@@ -50,24 +91,24 @@ class CustomerStatusModel {
 
   CustomerStatusModel(
       {required this.averageTransactionsAmount,
-        required this.currency,
-        required this.expiredPoints,
-        required this.level,
-        required this.levelConditionValue,
-        required this.levelName,
-        required this.lockedPoints,
-        required this.nextLevel,
-        required this.nextLevelConditionValue,
-        required this.nextLevelName,
-        required this.p2pPoints,
-        required this.points,
-        required this.pointsExpiringNextMonth,
-        required this.totalEarnedPoints,
-        required this.transactionsAmount,
-        required this.transactionsAmountToNextLevel,
-        required this.transactionsAmountWithoutDeliveryCosts,
-        required this.transactionsCount,
-        required this.usedPoints});
+      required this.currency,
+      required this.expiredPoints,
+      required this.level,
+      required this.levelConditionValue,
+      required this.levelName,
+      required this.lockedPoints,
+      required this.nextLevel,
+      required this.nextLevelConditionValue,
+      required this.nextLevelName,
+      required this.p2pPoints,
+      required this.points,
+      required this.pointsExpiringNextMonth,
+      required this.totalEarnedPoints,
+      required this.transactionsAmount,
+      required this.transactionsAmountToNextLevel,
+      required this.transactionsAmountWithoutDeliveryCosts,
+      required this.transactionsCount,
+      required this.usedPoints});
 
   factory CustomerStatusModel.fromJson(Map<String, dynamic> parsedJson) {
     return CustomerStatusModel(
@@ -101,5 +142,3 @@ class CustomerStatusModel {
     );
   }
 }
-
-

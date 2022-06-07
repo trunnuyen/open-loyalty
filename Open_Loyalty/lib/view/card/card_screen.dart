@@ -6,6 +6,8 @@ import 'package:open_loyalty/models/maintenance.dart';
 import 'package:open_loyalty/view/campaign/campaign_screen.dart';
 import '../../constant.dart';
 import 'package:barcode_widget/barcode_widget.dart';
+import '../../utils/utilities.dart';
+import '../Admin/Chat/ChatScreen.dart';
 import '../product/product_screen.dart';
 
 class CardScreen extends StatefulWidget {
@@ -42,9 +44,9 @@ class _BodyState extends State<Body> {
     super.initState();
     _value = _repository.getCustomerData();
   }
+
   @override
   Widget build(BuildContext context) {
-
     return SingleChildScrollView(
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -62,14 +64,14 @@ class _BodyState extends State<Body> {
               child: FutureBuilder<CustomerModel?>(
                   future: _value,
                   builder: (context, AsyncSnapshot<CustomerModel?> snapshot) {
-                print(snapshot.connectionState);
-                if (snapshot.hasData) {
-                  return cardInfo(snapshot.data);
-                } else if (snapshot.hasError) {
-                  return Text(snapshot.error.toString());
-                }
-                return Center(child: CircularProgressIndicator());
-              }),
+                    print(snapshot.connectionState);
+                    if (snapshot.hasData) {
+                      return cardInfo(snapshot.data);
+                    } else if (snapshot.hasError) {
+                      return Text(snapshot.error.toString());
+                    }
+                    return Center(child: CircularProgressIndicator());
+                  }),
             ),
             const Padding(
               padding: EdgeInsets.only(left: 16, top: 14),
@@ -125,7 +127,24 @@ class _BodyState extends State<Body> {
                       ),
                       Expanded(
                         child: GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            if (Utilities.isKeyboardShowing()) {
+                              Utilities.closeKeyboard(context);
+                            }
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ChatPage(
+                                  arguments: ChatPageArguments(
+                                    peerId: 'g1VmCRfMGye293QuzGSVzuxB2YD3',
+                                    peerAvatar:
+                                        'https://cdn-icons-png.flaticon.com/512/1177/1177568.png?w=360',
+                                    peerNickname: 'Admin',
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
                           child: Container(
                             margin: const EdgeInsets.only(right: 8),
                             padding: const EdgeInsets.only(left: 16),
@@ -148,7 +167,7 @@ class _BodyState extends State<Body> {
                             ),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                   const SizedBox(
