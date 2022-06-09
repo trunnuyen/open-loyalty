@@ -6,9 +6,9 @@ import 'package:open_loyalty/models/maintenance.dart';
 import 'package:open_loyalty/view/campaign/campaign_screen.dart';
 import '../../constant.dart';
 import 'package:barcode_widget/barcode_widget.dart';
-import '../../utils/utilities.dart';
 import '../Admin/Chat/ChatScreen.dart';
 import '../product/product_screen.dart';
+import '../stores/stores_screen.dart';
 
 class CardScreen extends StatefulWidget {
   @override
@@ -128,20 +128,19 @@ class _BodyState extends State<Body> {
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
-                            if (Utilities.isKeyboardShowing()) {
-                              Utilities.closeKeyboard(context);
-                            }
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ChatPage(
-                                  arguments: ChatPageArguments(
-                                    peerId: 'g1VmCRfMGye293QuzGSVzuxB2YD3',
-                                    peerAvatar:
-                                        'https://cdn-icons-png.flaticon.com/512/1177/1177568.png?w=360',
-                                    peerNickname: 'Admin',
-                                  ),
-                                ),
+                                builder: (context) {
+                                  return ChatPage(
+                                    arguments: ChatPageArguments(
+                                      peerId: 'pEodccDjmgQZ7Iu3iS8XjAW1Ep53',
+                                      peerAvatar:
+                                          'https://cdn-icons-png.flaticon.com/512/1177/1177568.png?w=360',
+                                      peerNickname: 'Admin',
+                                    ),
+                                  );
+                                },
                               ),
                             );
                           },
@@ -167,7 +166,7 @@ class _BodyState extends State<Body> {
                             ),
                           ),
                         ),
-                      ),
+                      )
                     ],
                   ),
                   const SizedBox(
@@ -214,7 +213,7 @@ class _BodyState extends State<Body> {
                       ),
                       Expanded(
                         child: GestureDetector(
-                          /*onTap: () {
+                          onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -223,7 +222,7 @@ class _BodyState extends State<Body> {
                                 },
                               ),
                             );
-                          },*/
+                          },
                           child: Container(
                             margin: const EdgeInsets.only(right: 8),
                             padding: const EdgeInsets.only(left: 18),

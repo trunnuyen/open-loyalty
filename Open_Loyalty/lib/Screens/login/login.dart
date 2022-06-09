@@ -173,7 +173,7 @@ class _HomePageState extends State {
                     User? user = await loginUsingEmailPassword(
                         email: email, password: password, context: context);
                     if (user != null) {
-                      if (user.email == "admin@gmail.com") {
+                      if (user.email == "trng1907@gmail.com") {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
                             builder: (context) => AdminScreen()));
                       } else {

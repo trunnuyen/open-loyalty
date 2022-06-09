@@ -11,7 +11,6 @@ import 'package:open_loyalty/utils/utils.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:open_loyalty/utils/utils.dart';
 
 import '../../../models/customer_model.dart';
 import '../../../components/loading_view..dart';

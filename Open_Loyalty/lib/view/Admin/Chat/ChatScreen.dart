@@ -9,7 +9,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:open_loyalty/constant.dart';
 import 'package:open_loyalty/models/chat/chat_message_model.dart';
-import 'package:open_loyalty/models/chat/chat_message_model.dart';
 import '../provider/ChatProvider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,7 +19,7 @@ import '../../../components/loading_view..dart';
 import 'FullPhotoPage.dart';
 
 class ChatPage extends StatefulWidget {
-  ChatPage({Key? key, required this.arguments}) : super(key: key);
+  const ChatPage({Key? key, required this.arguments}) : super(key: key);
 
   final ChatPageArguments arguments;
 
@@ -33,7 +32,7 @@ class ChatPageState extends State<ChatPage> {
 
   List<QueryDocumentSnapshot> listMessage = [];
   int _limit = 20;
-  int _limitIncrement = 20;
+  final int _limitIncrement = 20;
   String groupChatId = "";
 
   File? imageFile;
