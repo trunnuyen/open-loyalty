@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:open_loyalty/constant.dart';
@@ -170,7 +171,7 @@ class MessagesPageState extends State<MessagesPage> {
                             controller: listScrollController,
                           );
                         } else {
-                          return Center(
+                          return const Center(
                             child: Text("No users"),
                           );
                         }
@@ -270,7 +271,7 @@ class MessagesPageState extends State<MessagesPage> {
           child: TextButton(
             child: Row(
               children: <Widget>[
-                Material(
+                const Material(
                   child: Icon(
                     Icons.account_circle,
                     size: 50,
@@ -295,7 +296,9 @@ class MessagesPageState extends State<MessagesPage> {
                         ),
                         Container(
                           child: Text(
-                            'Email: ${userChat.email}',
+                            messageProvider
+                                .getLastMessage(currentUserId, userChat.id)
+                                .toString(),
                             maxLines: 1,
                             style:
                                 TextStyle(color: ColorConstants.primaryColor),

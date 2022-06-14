@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:open_loyalty/constant.dart';
 
+import '../../../models/chat/chat_message_model.dart';
+
 class MessageProvider {
   final FirebaseFirestore firebaseFirestore;
 
@@ -20,7 +22,7 @@ class MessageProvider {
       return FirebaseFirestore.instance
           .collection(pathCollection)
           .limit(limit)
-          .where(FirestoreConstants.name, isEqualTo: textSearch)
+          .where("name", isEqualTo: textSearch)
           .snapshots();
     } else {
       return FirebaseFirestore.instance
@@ -28,5 +30,55 @@ class MessageProvider {
           .limit(limit)
           .snapshots();
     }
+  }
+
+  Future<String> getCustomerName(String textValue) async {
+    var customer = FirebaseFirestore.instance.collection('Users');
+    final list_id = <String>[];
+    var id_customer, name;
+    QuerySnapshot id = await customer.get();
+    id.docs.forEach((doc) {
+      list_id.add(doc.id);
+    });
+    for (int i = 0; i < list_id.length; i++) {
+      final docSnapshot = await customer.doc(list_id[i]).get();
+      if (docSnapshot.exists) {
+        Map<String, dynamic> data = docSnapshot.data()!;
+        name = data['information']['name'];
+        if (textValue == name) {
+          id_customer = list_id[i];
+        }
+      }
+    }
+    var docSnapshotreceiver = await customer.doc(id_customer).get();
+    if (docSnapshotreceiver.exists) {
+      return "";
+    }
+    return "";
+  }
+
+  getLastMessage(String adminID, String userID) async {
+    String id = "$userID-$adminID", content = "";
+    MessageChat messagechat =
+        MessageChat(content: '', idFrom: '', idTo: '', timestamp: '', type: 0);
+    final id_message = <String>[];
+    QuerySnapshot doc = await FirebaseFirestore.instance
+        .collection('message')
+        .doc(id)
+        .collection(id)
+        .get();
+    doc.docs.forEach((doc) {
+      id_message.add(doc.id);
+    });
+    var docSnapshot = await FirebaseFirestore.instance
+        .collection('message')
+        .doc(id)
+        .collection(id)
+        .doc(id_message[id_message.length - 1])
+        .get();
+    if (docSnapshot.exists) {
+      messagechat = MessageChat.fromDocument(docSnapshot);
+    }
+    return messagechat.content;
   }
 }

@@ -67,6 +67,31 @@ class ChatProvider {
       );
     });
   }
+
+  Future<String> getLastMessage(String textValue) async {
+    var customer = FirebaseFirestore.instance.collection('Users');
+    final list_id = <String>[];
+    var id_customer, name;
+    QuerySnapshot id = await customer.get();
+    id.docs.forEach((doc) {
+      list_id.add(doc.id);
+    });
+    for (int i = 0; i < list_id.length; i++) {
+      final docSnapshot = await customer.doc(list_id[i]).get();
+      if (docSnapshot.exists) {
+        Map<String, dynamic> data = docSnapshot.data()!;
+        name = data['information']['name'];
+        if (textValue == name) {
+          id_customer = list_id[i];
+        }
+      }
+    }
+    var docSnapshotreceiver = await customer.doc(id_customer).get();
+    if (docSnapshotreceiver.exists) {
+      return "";
+    }
+    return "";
+  }
 }
 
 class TypeMessage {
